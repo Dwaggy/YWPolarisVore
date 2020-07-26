@@ -24,6 +24,9 @@ datum/preferences
 	var/tooltipstyle = "Midnight"		//Style for popup tooltips
 	var/client_fps = 0
 
+	var/tgui_fancy = TRUE
+	var/tgui_lock = FALSE
+
 	//character preferences
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we are a random name every round
@@ -37,6 +40,10 @@ datum/preferences
 	var/r_hair = 0						//Hair color
 	var/g_hair = 0						//Hair color
 	var/b_hair = 0						//Hair color
+	var/grad_style = "none"				//Gradient style
+	var/r_grad = 0						//Gradient color
+	var/g_grad = 0						//Gradient color
+	var/b_grad = 0						//Gradient color
 	var/f_style = "Shaved"				//Face hair type
 	var/r_facial = 0					//Face hair color
 	var/g_facial = 0					//Face hair color
