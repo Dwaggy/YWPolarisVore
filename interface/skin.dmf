@@ -1145,6 +1145,7 @@ window "mainwindow"
 		anchor1 = none
 		anchor2 = none
 		is-visible = false
+		auto-format = false
 		saved-params = ""
 	elem "hotkey_toggle"
 		type = BUTTON
@@ -1219,7 +1220,6 @@ window "mapwindow"
 		text-color = none
 		is-default = true
 		saved-params = "icon-size"
-		zoom-mode = "distort"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
 

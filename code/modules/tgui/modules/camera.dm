@@ -36,14 +36,14 @@
 	cam_screen.assigned_map = map_name
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.screen_loc = "[map_name]:1,1"
-	cam_plane_masters = list()
 	
-	for(var/plane in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/instance = new plane()
+	cam_plane_masters = get_plane_masters()
+
+	for(var/plane in cam_plane_masters)
+		var/obj/screen/instance = plane
 		instance.assigned_map = map_name
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "[map_name]:CENTER"
-		cam_plane_masters += instance
 
 	local_skybox = new()
 	local_skybox.assigned_map = map_name
@@ -114,7 +114,7 @@
 	return data
 
 /datum/tgui_module/camera/tgui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data = ..()
 	data["mapRef"] = map_name
 	var/list/cameras = get_available_cameras(user)
 	data["cameras"] = list()
@@ -130,7 +130,10 @@
 
 /datum/tgui_module/camera/tgui_act(action, params)
 	if(..())
-		return
+		return TRUE
+	
+	if(action && !issilicon(usr))
+		playsound(tgui_host(), "terminal_type", 50, 1)
 
 	if(action == "switch_camera")
 		var/c_tag = params["name"]
@@ -254,33 +257,7 @@
 // If/when that is done, just move all the PC_ specific data and stuff to the modular computers themselves
 // instead of copying this approach here.
 /datum/tgui_module/camera/ntos
-	tgui_id = "NtosCameraConsole"
-
-/datum/tgui_module/camera/ntos/tgui_state()
-	return GLOB.tgui_ntos_state
-
-/datum/tgui_module/camera/ntos/tgui_static_data()
-	. = ..()
-	
-	var/datum/computer_file/program/host = tgui_host()
-	if(istype(host) && host.computer)
-		. += host.computer.get_header_data()
-
-/datum/tgui_module/camera/ntos/tgui_act(action, params)
-	if(..())
-		return
-
-	var/datum/computer_file/program/host = tgui_host()
-	if(istype(host) && host.computer)
-		if(action == "PC_exit")
-			host.computer.kill_program()
-			return TRUE
-		if(action == "PC_shutdown")
-			host.computer.shutdown_computer()
-			return TRUE
-		if(action == "PC_minimize")
-			host.computer.minimize_program(usr)
-			return TRUE
+	ntos = TRUE
 
 // ERT Version provides some additional networks.
 /datum/tgui_module/camera/ntos/ert

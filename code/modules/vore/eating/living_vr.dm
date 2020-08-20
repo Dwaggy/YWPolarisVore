@@ -13,7 +13,7 @@
 	var/weight = 137					// Weight for mobs for weightgain system
 	var/weight_gain = 1 				// How fast you gain weight
 	var/weight_loss = 0.5 				// How fast you lose weight
-	var/vore_egg_type = "egg" 				// Default egg type.
+	var/vore_egg_type = "egg" 			// Default egg type.
 	var/feral = 0 						// How feral the mob is, if at all. Does nothing for non xenochimera at the moment.
 	var/revive_ready = REVIVING_READY	// Only used for creatures that have the xenochimera regen ability, so far.
 	var/metabolism = 0.0015
@@ -43,7 +43,7 @@
 	M.verbs += /mob/living/proc/switch_scaling
 	if(M.no_vore) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
-	M.vorePanel = new
+	M.vorePanel = new(M)
 	M.verbs += /mob/living/proc/insidePanel
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
@@ -376,7 +376,7 @@
 		return
 
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-	visible_message("<span class='warning'>[src] smell [smelled]!</span>","<span class='notice'>You smells [smelled]. They smell like [smelled.get_smell_message()].</span>","<b>Sniff!</b>")
+	visible_message("<span class='warning'>[src] smells [smelled]!</span>","<span class='notice'>You smell [smelled]. They smell like [smelled.get_smell_message()].</span>","<b>Sniff!</b>")
 
 /mob/living/proc/get_smell_message(allow_generic = 1)
 	if(!vore_smell && !allow_generic)
